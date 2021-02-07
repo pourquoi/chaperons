@@ -33,6 +33,7 @@ services:
       context: .
     volumes:
       - user_upload:/app/web/maps
+      - .docker/import:/app/var/import
     networks:
       project_network:
         ipv4_address: 172.29.0.20

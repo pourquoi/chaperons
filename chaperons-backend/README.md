@@ -3,16 +3,20 @@ carto chaperons api
 
 [Installation] (/INSTALL.md)
 
-Mettre à jour les crèches:
+Mise à jour des crèches:
+mettre un fichier creches.csv dans ```.docker/import/creches.csv```, il est automatiquement parsé chaque jour s'il existe. L'import n'est pas destructif.
+Pour le format voir ```var/creches.csv```.
+
+Mettre à jour les crèches manuellement:
 
 ```shell
-bin/console app:import-nurseries /path/to/file.csv
+docker exec -it cartochaperons_api bin/console app:import-nurseries /path/to/file.csv
 ```
 
 Ajouter un utilisateur:
 
 ```shell
-bin/console app:create-user roger
+docker exec -it cartochaperons_api bin/console app:create-user roger
 ```
 
 * [rest bundle] (http://symfony.com/doc/master/bundles/FOSRestBundle/index.html)
