@@ -1,5 +1,5 @@
 // edit this
-const API_HOST = www.carto-chaperons.com;
+const API_HOST = 'www.carto-chaperons.com';
 
 const API_PORT = 8899;
 

@@ -47,6 +47,66 @@ class Family
     private $nurseries;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_500m;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_1km;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_3km;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_5km;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_10km;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_20km;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_30km;
+
+    public function getClosestTotal($distance) {
+        if ($distance < 1) {
+            return $this->total_500m;
+        } else if ($distance < 3) {
+            return $this->total_1km;
+        } else if ($distance < 5) {
+            return $this->total_3km;
+        } else if ($distance < 10) {
+            return $this->total_5km;
+        } else if ($distance < 20) {
+            return $this->total_10km;
+        } else if ($distance < 30) {
+            return $this->total_20km;
+        } else {
+            return $this->total_30km;
+        }
+    }
+
+    /**
      * @param $n int
      * @return NurserySelection[]
      */
@@ -218,4 +278,118 @@ class Family
     {
         return $this->nurseries;
     }
+
+    /**
+     * @return int
+     */
+    public function getTotal500m()
+    {
+        return $this->total_500m;
+    }
+
+    /**
+     * @param int $total_500m
+     */
+    public function setTotal500m($total_500m)
+    {
+        $this->total_500m = $total_500m;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal1km()
+    {
+        return $this->total_1km;
+    }
+
+    /**
+     * @param int $total_1km
+     */
+    public function setTotal1km($total_1km)
+    {
+        $this->total_1km = $total_1km;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal3km()
+    {
+        return $this->total_3km;
+    }
+
+    /**
+     * @param int $total_3km
+     */
+    public function setTotal3km($total_3km)
+    {
+        $this->total_3km = $total_3km;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal5km()
+    {
+        return $this->total_5km;
+    }
+
+    /**
+     * @param int $total_5km
+     */
+    public function setTotal5km($total_5km)
+    {
+        $this->total_5km = $total_5km;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal10km()
+    {
+        return $this->total_10km;
+    }
+
+    /**
+     * @param int $total_10km
+     */
+    public function setTotal10km($total_10km)
+    {
+        $this->total_10km = $total_10km;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal20km()
+    {
+        return $this->total_20km;
+    }
+
+    /**
+     * @param int $total_20km
+     */
+    public function setTotal20km($total_20km)
+    {
+        $this->total_20km = $total_20km;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal30km()
+    {
+        return $this->total_30km;
+    }
+
+    /**
+     * @param int $total_30km
+     */
+    public function setTotal30km($total_30km)
+    {
+        $this->total_30km = $total_30km;
+    }
+
+
 }

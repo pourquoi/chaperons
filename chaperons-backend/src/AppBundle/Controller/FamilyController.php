@@ -155,22 +155,23 @@ class FamilyController extends BaseController
         fputcsv($f, $header);
 
         foreach($map->getFamilies() as $family) {
+            /** @var Family $family $row */
             $row = [];
             $row[] = implode(' ', [$family->getAddress()->getStreet(),
                 $family->getAddress()->getCity(),
-                $family->getAddress()->getZip()]);
+                $family->getAddress()->getZip(), '(' . $family->getId() . ')']);
 
             foreach ($distances as $dist) {
                 $sel = $family->getClosestNurserySelection(30);
-                $total = 0;
                 $nurseries = [];
                 foreach($sel as $s) {
                     /** @var NurserySelection $s */
                     if ($s->getDistance() <= $dist*1000) {
-                        $total ++;
                         $nurseries[] = $s->getFormattedDistance() . ': ' . $s->getNursery()->getName() . ' (' . $s->getNursery()->getId() . ')';
                     }
                 }
+
+                $total = $family->getClosestTotal($dist);
 
                 $row[] = $total .  ' crèche' . ($total ? 's' : '') . "\n" . implode("\n", $nurseries);
             }
@@ -273,7 +274,7 @@ class FamilyController extends BaseController
         $this->getAuthorizedUser($map->getUser()->getId());
 
         $familyDispatcher = new FamilyDispatcher($em);
-        $familyDispatcher->updateMapNurseries($map);
+        $familyDispatcher->updateMapNurseries($map, true);
 
         $view = $this->view($map);
 

@@ -2,7 +2,6 @@ drop procedure if exists update_close_nurseries;
 
 delimiter $$
 
-
 create procedure update_close_nurseries (
   IN family_id int)
 begin
@@ -21,6 +20,8 @@ begin
   declare show_partners int;
   declare radius int;
   declare max_results int;
+  declare total int;
+  declare distance float;
 
 
 
@@ -54,25 +55,53 @@ begin
          * COS(RADIANS(a.latitude))
          * COS(RADIANS(family_lng - a.longitude))
          + SIN(RADIANS(family_lat))
-         * SIN(RADIANS(a.latitude)))) as distance
+         * SIN(RADIANS(a.latitude)))) as ndistance
   from nursery n
   inner join address a on n.address_id=a.id
   where a.latitude between lat1 and lat2
         and a.longitude between lng1 and lng2
-  --      and distance <= radius
+        and (distance_unit
+                * DEGREES(ACOS(COS(RADIANS(family_lat))
+                                   * COS(RADIANS(a.latitude))
+                                   * COS(RADIANS(family_lng - a.longitude))
+          + SIN(RADIANS(family_lat))
+                                   * SIN(RADIANS(a.latitude))))) <= radius
         and (
           (show_dsp = 1 or n.nature != 'DSP')
           and (show_partners = 1 or n.nature != 'PARTNER')
           and (show_mac = 1 or (n.nature != 'CEP' or n.type != 'MAC'))
           and (show_micro = 1 or (n.nature != 'CEP' or n.type != 'MICRO'))
         )
-  order by distance
+  order by ndistance
   limit max_results;
+
+  set total = get_total_nurseries(family_id, 500);
+  update family set total_500m = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 1000);
+  update family set total_1km = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 3000);
+  update family set total_3km = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 5000);
+  update family set total_5km = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 10000);
+  update family set total_10km = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 20000);
+  update family set total_20km = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 30000);
+  update family set total_30km = total where id = family_id;
 
   select 'ok';
 
   end if;
 
-end$$
+end
+
+$$
 
 delimiter ;
