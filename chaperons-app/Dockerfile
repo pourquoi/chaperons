@@ -13,7 +13,7 @@ RUN npm install -g @angular/cli
 
 COPY . /app
 
-CMD ng build --env=prod
+CMD ng build --prod
 
 FROM nginx:alpine
 RUN mkdir /app

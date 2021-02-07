@@ -6,6 +6,7 @@ APP_HOST=localhost APP_PORT=80 docker-compose up -d
 
 ```shell
 docker exec -it cartochaperons_api bin/up.sh
+docker exec -it cartochaperons_api bin/console app:create-user admin
 ```
 
 ```shell
