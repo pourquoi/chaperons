@@ -1,0 +1,19 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     172.29.0.100
+    database_port:     ~
+    database_name:     cartochaperons
+    database_user:     cartochaperons
+    database_password: cartochaperons
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # frontend address
+    app_host:          '%env(APP_HOST)%'
+    app_port:          '%env(APP_POST)%'
+
+    node_path:         /usr/bin/nodejs
+    phantom_path:      /usr/bin/phantomjs

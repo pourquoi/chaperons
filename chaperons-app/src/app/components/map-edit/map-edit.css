@@ -1,0 +1,51 @@
+h2 {
+    font-size: 1.25rem;
+    color: green;
+    margin-top: 2rem;
+}
+
+h1 {
+    font-size: 1.25rem;
+    border-bottom: green 1px solid;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.geocoding-container {
+    margin-top: 4rem;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+.geocoding-status {
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.geocoding-error-status a {
+    color: green;
+}
+
+.table {
+    margin-bottom: 2rem;
+}
+
+.table th, .table td {
+    padding: 0.2rem;
+} 
+
+.geocoding-error-input {
+    width: 100px;
+}
+
+.geocoding-error-action.validate {
+    display: inline-block;
+    color: green;
+    margin-right: 10px;
+}
+
+.geocoding-error-action.ignore {
+    display: inline-block;
+}

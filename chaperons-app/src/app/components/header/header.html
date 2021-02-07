@@ -1,0 +1,7 @@
+<nav class="navbar navbar-light">
+    <a class="navbar-brand" [routerLink]="['/']">Carto' Chaperons</a>
+    
+    <a *ngIf="authService.loggedin" [routerLink]="['/logout']" class="nav-item nav-link pull-right sign-out" href="#">
+        <i class="fa fa-sign-out" aria-hidden="true"></i>
+    </a>
+</nav>

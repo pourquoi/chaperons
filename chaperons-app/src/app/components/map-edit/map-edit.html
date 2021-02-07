@@ -1,0 +1,123 @@
+<app-header></app-header>
+
+<div class="container main">
+
+<form *ngIf="edition_step == 'form'">
+
+  <h1 [hidden]="show_name_input" (click)="show_name_input=1">{{ map.name }} <i class="fa fa-pencil" aria-hidden="true"></i></h1>
+
+  <div class="form-group" [hidden]="!show_name_input" id="name_input_container">
+    <input [(ngModel)]="map.name" type="text" class="form-control" name="name" placeholder="Nom de la carte" (blur)="show_name_input=0">
+  </div>
+
+
+  <h2><i class="fa fa-map-marker" aria-hidden="true"></i> Crèches à afficher sur la carte</h2>
+  
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="map.show_mac" class="form-check-input" type="checkbox" name="show_mac">
+        MAC ({{ stats['mac'] }})
+      </label>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="map.show_micro" class="form-check-input" type="checkbox" name="show_micro">
+        Micro ({{ stats['micro'] }})
+      </label>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="map.show_dsp" class="form-check-input" type="checkbox" name="show_dsp">
+        DSP ({{ stats['dsp'] }})
+      </label>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="map.show_partners" class="form-check-input" type="checkbox" name="show_partners">
+        Crèches partenaires ({{ stats['partner'] }})
+      </label>
+    </div>
+  
+
+  <h2><i class="fa fa-home" aria-hidden="true"></i> Adresses des familles</h2>
+
+  <p>Les adresses des familles doivent être au format csv et respecter le formatage suivant: 
+    à minima une colonne "street" contenant le n° et le nom de la voie, une colonne "zip" contenant le code postal,
+    une colonne "city" contenant le nom de la ville.
+
+  </p>
+
+  <div class="form-group">
+
+    <div class="alert alert-success" role="alert" *ngIf="map.families.length">
+      <strong>{{ map.families.length }}</strong> adresses importées
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="upload_error">
+      {{ upload_error }}
+    </div>
+
+    <label class="">
+      <input type="file" ng2FileSelect [uploader]="uploader">
+      <i class="fa fa-circle-o-notch fa-spin fa-fw" *ngIf="uploading"></i>
+    </label>
+    
+  </div>
+
+  <div class="alert alert-danger" role="alert" *ngIf="save_error">
+    {{ save_error }}
+  </div>
+  
+  <div class="form-group text-xs-center">
+    <button type="button" (click)="submit()" class="btn btn-primary" [disabled]="!map.families.length">Générer la carte <i class="fa fa-circle-o-notch fa-spin fa-fw" *ngIf="saving"></i></button>
+  </div>
+
+</form>
+
+<h1 *ngIf="edition_step == 'geocoding'">{{ map.name }}</h1>
+
+<div *ngIf="edition_step == 'geocoding'" class="geocoding-container">
+  <div class="text-xs-center geocoding-status">
+    <span *ngIf="geocoding_in_progress">Géocodage en cours&hellip;</span>
+    <span *ngIf="!geocoding_in_progress">Géocodage terminé</span>
+  </div>
+  <div class="text-xs-center">Adresses trouvées : {{ n_address_geocoded }} sur {{ map.families.length }}</div>
+  <progress class="progress" [value]="100 * n_address_geocoded / map.families.length" max="100"></progress>
+  <div class="text-xs-center geocoding-error-status">Erreurs : {{ addressErrors.length }} &nbsp;&nbsp;&nbsp;<a *ngIf="addressErrors.length" (click)="toggleErrors($event)" href="#">voir les erreurs <i class="fa fa-caret-down" aria-hidden="true"></i></a></div>
+</div>
+
+<table class="table" *ngIf="edition_step == 'geocoding'" [hidden]="!show_errors">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Street</th>
+      <th>Zip</th>
+      <th>City</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let family of addressErrors; let i=index;">
+      <td>{{ family.address.street }}</td>
+      <td>{{ family.address.city }}</td>
+      <td>{{ family.address.zip }}</td>
+      <td><input class="geocoding-error-input" type="text" name="addr_lat_{{ i }}" [(ngModel)]="family.address.latitude" /></td>
+      <td><input class="geocoding-error-input" type="text" name="addr_lng_{{ i }}" [(ngModel)]="family.address.longitude" /></td>
+      <td>
+        <a class="geocoding-error-action validate" (click)="editFamily($event, family)" href="#"><i class="fa fa-check-circle" aria-hidden="true"></i> corriger</a>
+        <a class="geocoding-error-action ignore" (click)="removeFamily($event, family)" href="#"><i class="fa fa-ban" aria-hidden="true"></i> supprimer</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-xs-center map-link" *ngIf="edition_step == 'geocoding'">
+  <button type="button" [routerLink]="['/maps', map.id]" class="btn btn-primary" [disabled]="geocoding_in_progress">Voir la carte</button>
+</div>
+
+
+</div>

@@ -1,0 +1,93 @@
+/* You can add global styles to this file, and also import other style files */
+
+.main {
+    margin: 1.25rem;
+  }
+  
+  /* map */
+  .points-layer, .points-layer svg {
+    position: absolute;
+    border: none;
+  }
+  
+  .points-layer svg {
+    /*width: 60px;*/
+    height: 20px;
+    padding-right: 100px;
+    font: 10px sans-serif;
+  }
+  
+  .points-layer circle {
+    fill: brown;
+    stroke: white;
+    stroke-width: 1.5px;
+  }
+
+  /* ventilation */
+
+  .ventilation {
+      display: flex;
+      flex-wrap: wrap;
+  }
+  
+  /* histogram */
+  
+  .map-histogram {
+    width: 100%;
+    max-width: 900px;
+    height: 250px;
+    display: block;
+    margin-right: 15px;
+  }
+  
+  .map-histogram .bar rect {
+    fill: steelblue;
+  }
+  
+  .map-histogram .bar rect:hover {
+      fill: brown;
+  }
+  
+  .map-histogram .bar text {
+    fill: #fff;
+    font: 10px sans-serif;
+  }
+  
+  
+  /* stats table */
+  
+  .map-stats {
+    display: flex;
+    max-width: 550px;
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    border: 1px solid #666;
+  }
+  
+  .map-stats-header {
+    width: auto;
+    background-color: #ccc;
+  }
+  
+  .map-stats-item {
+    width: auto;
+  }
+  
+  .map-stats-item.alt {
+    background-color: #eceeef;
+  }
+  
+  .map-stats-label {
+    width: 200px;
+    display: inline-block;
+    padding-left: 1em;
+    border-right: 1px solid #666;
+  }
+  
+  .map-stats-value {
+    display: inline-block;
+    padding-left: 1em;
+    width: 100px;
+    text-align: right;
+  }

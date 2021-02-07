@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div class="main">
+  <div class="row maps-actions">
+    <div class="col col-xs-6">
+      <a class="btn btn-sm btn-primary" [routerLink]="['/maps/new']"><i class="fa fa-plus" aria-hidden="true"></i> Créer une carte
+      </a>
+    </div>
+    <div class="col col-xs-6">
+      <div *ngIf="maps.length" class="dropdown pull-right maps-order">
+        <button class="btn btn-sm btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ orders[order] }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" (click)="changeOrder('recent')">les plus recentes</a>
+          <a class="dropdown-item" href="#" (click)="changeOrder('old')">les plus anciennes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="map-list">
+    <div *ngFor="let map of maps; let i = index" class="map-list-item">
+      <div class="card" [routerLink]="['/maps', map.id]">
+        <div class="card-img" [class.card-img-default]="!map.capture_filename" [style.background-image]="thumbnail(map)">
+        </div>
+        <div class="card-block">
+          <a [routerLink]="['/maps', map.id]" class="card-link" href="#">{{ map.name }}</a>
+        </div>
+        <div class="card-footer text-muted">
+          {{ dateText(map) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" *ngIf="start > 0">
+        <a class="page-link" href="#" (click)="previousPage($event)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      
+      <li class="page-item" *ngIf="has_next_page">
+        <a class="page-link" href="#" (click)="nextPage($event)" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+</div>

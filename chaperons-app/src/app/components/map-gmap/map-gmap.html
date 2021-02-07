@@ -1,0 +1,19 @@
+<div id="map"></div>
+
+<div [hidden]="mode == 'render'" class="map-options">
+
+  <chaperons-color-input class="color-input" [color]="map.fill_color_nursery_owned" (changed)="updateColors($event, 'nursery_owned')" [label]="'Crèches propres'"></chaperons-color-input>
+  <chaperons-color-input class="color-input" [color]="map.fill_color_nursery" (changed)="updateColors($event, 'nursery')" [label]="'Crèches partenaires'"></chaperons-color-input>
+  <chaperons-color-input class="color-input" [color]="map.fill_color_family" (changed)="updateColors($event, 'family')" [label]="'Familles'"></chaperons-color-input>
+
+  <form class="form-inline">
+    <div class="form-group">
+    
+    <select name="map-style" [(ngModel)]="style" class="form-control style-select">
+      <option *ngFor="let s of styles" [value]="s">{{ s }}</option>
+    </select>
+    </div>
+  </form>
+</div>
+
+<div class="clearfix"></div>

@@ -1,0 +1,7 @@
+.git
+.idea
+.vscode
+web/maps
+vendor/**
+cache/**
+log/**

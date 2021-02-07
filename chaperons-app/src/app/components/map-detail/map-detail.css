@@ -1,0 +1,23 @@
+:host >>> map-gmap #map {
+    height: 800px;
+    width: 900px;
+}
+
+h2 {
+    color: green;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+}
+
+.map-header {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid black;
+}
+
+.map-header a {
+    margin-left: 10px;
+}
+
+h1 {
+    font-size: 1.25rem;
+}

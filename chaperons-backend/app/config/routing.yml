@@ -1,0 +1,23 @@
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+users:
+    type:     rest
+    resource: AppBundle\Controller\UserController
+    prefix:   /api
+
+maps:
+    type:     rest
+    resource: AppBundle\Controller\MapController
+    prefix:   /api
+
+nurseries:
+    type:     rest
+    resource: AppBundle\Controller\NurseryController
+    prefix:   /api
+
+families:
+    type:     rest
+    resource: AppBundle\Controller\FamilyController
+    prefix:   /api

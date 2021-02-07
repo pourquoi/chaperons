@@ -1,0 +1,11 @@
+// edit this
+const API_HOST = www.carto-chaperons.com;
+
+const API_PORT = 8899;
+
+export const environment = {
+  production: true,
+  apiEndpoint: 'http://' + API_HOST + ':' + API_PORT + '/api',
+  uploadBaseUrl: 'http://' + API_HOST + ':' + API_PORT,
+  gmapKey: 'AIzaSyCNl0ihe_M3q9EaO1OL9j5tG0Ti6CpK_4Q' // https://developers.google.com/maps/documentation/geocoding/get-api-key#key
+};

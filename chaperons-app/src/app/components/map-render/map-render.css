@@ -1,0 +1,11 @@
+:host >>> map-gmap #map {
+    height: 430px;
+    width: 740px;
+}
+
+:host >>> .gmnoprint {
+    display: none;
+}
+:host >>> .gm-style-cc {
+    display: none;
+}

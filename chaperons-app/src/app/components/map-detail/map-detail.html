@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+<div class="main">
+
+<div class="map-header clearfix">
+<h1 class="pull-left">{{ map.name }}</h1>
+
+<div class="pull-right" *ngIf="!show_remove_confirm">
+<a (click)="toggleRemoveConfirm($event)" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</a>
+<a [routerLink]="['/maps', map.id, 'edit']" href="#"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a>
+</div>
+
+<div class="pull-right" *ngIf="show_remove_confirm">
+La carte et ses données vont être supprimées
+<a (click)="remove($event)" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Ok</a>
+<a (click)="toggleRemoveConfirm($event)" href="#"><i class="fa fa-undo" aria-hidden="true"></i> Annuler</a>
+</div>
+
+</div>
+
+<div>
+
+  <h2>Ventilation des familles</h2>
+
+  <div class="ventilation">
+    <chaperons-histogram [map]="map" class="map-histogram"></chaperons-histogram>
+    <chaperons-map-stats [map]="map" class="map-stats"></chaperons-map-stats>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <h2>Légende</h2>
+
+  <map-gmap [map]="map" (changed)="save()"></map-gmap>
+
+  <h2>Export</h2>
+
+    <!--
+  <a href="#" (click)="export($event)"><i class="fa fa-circle-o-notch fa-spin fa-fw" *ngIf="export_in_progress"></i> Générer la carte (png)</a>
+  <a [href]="export_url" target="_blank" download *ngIf="map.capture_filename && !export_in_progress"><i class="fa fa-download"></i> {{ map.capture_filename }}</a>
+    -->
+
+  <a [href]="export_data_url" download target="_blank"><i class="fa fa-download"></i> Télécharger les données (csv)</a>
+
+  <a [href]="export_stats_url" download target="_blank"><i class="fa fa-download"></i> Télécharger les stats (csv)</a>
+
+</div>
+
+</div>
