@@ -46,7 +46,7 @@ begin
   set lat1 = family_lat  - (radius / distance_unit);
   set lat2 = family_lat  + (radius / distance_unit);
 
-  delete from nursery_selection where nursery_selection.family_id = @family_id;
+  delete from nursery_selection where nursery_selection.family_id = family_id;
 
   insert into nursery_selection (family_id, nursery_id, distance)
     select family_id, n.id,

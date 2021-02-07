@@ -41,7 +41,9 @@ class FamilyController extends BaseController
             // remove existing families
             foreach($map->getFamilies() as $f) {
                 $map->removeFamily($f);
+                $em->remove($f);
             }
+            $em->flush();
 
             /** @var UploadedFile $file */
             $file = $request->files->get('file');

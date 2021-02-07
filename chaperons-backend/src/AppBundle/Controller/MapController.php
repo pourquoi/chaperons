@@ -117,6 +117,7 @@ class MapController extends BaseController
             $map->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
+
             $em->flush();
 
             $dispatcher = new FamilyDispatcher($em);
