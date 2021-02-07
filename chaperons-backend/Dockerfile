@@ -19,6 +19,8 @@ RUN apt-get install -y nginx
 RUN rm /etc/nginx/sites-enabled/default
 COPY .docker/nginx/default.conf /etc/nginx/sites-enabled/default
 
+RUN apt-get install -yn mysql-client
+
 RUN rm -rf /var/lib/apt/lists/*
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \

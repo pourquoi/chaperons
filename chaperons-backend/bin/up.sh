@@ -3,8 +3,8 @@
 php bin/console doctrine:schema:create -qn || true
 php bin/console doctrine:schema:update -qn --force
 
-php bin/console doctrine:database:import -qn src/App/get_total_nurseries.sql
-php bin/console doctrine:database:import -qn src/App/update_close_nurseries.sql
+mysql -h maria -u cartochaperons -pcartochaperons cartochaperons < src/App/update_close_nurseries.sql
+mysql -h maria -u cartochaperons -pcartochaperons cartochaperons < src/App/get_total_nurseries.sql
 
 php bin/console cache:warmup -qn
 
