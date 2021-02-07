@@ -13,7 +13,7 @@ RUN npm install -g @angular/cli
 
 COPY . /app
 
-RUN ng build --prod
+RUN ng build
 
 FROM nginx:alpine
 RUN mkdir /app
