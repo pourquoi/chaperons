@@ -1,6 +1,5 @@
 #!/bin/bash
 
-php bin/console doctrine:schema:create -qn || true
 php bin/console doctrine:schema:update -qn --force
 
 mysql -h maria -u cartochaperons -pcartochaperons cartochaperons < src/App/update_close_nurseries.sql
