@@ -8,7 +8,7 @@ php bin/console doctrine:database:import -qn src/App/update_close_nurseries.sql
 
 php bin/console cache:warmup -qn
 
-mkdir -p /app/var/{logs,cache,session}/dev
+mkdir -p /app/var/{logs,cache,sessions}/dev
 chmod -R 777 /app/var/{logs,cache,sessions}/*
 
 chown -R www-data:www-data /app/var/logs
