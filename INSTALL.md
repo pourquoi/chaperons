@@ -4,6 +4,7 @@ requis docker, docker-compose
 ```shell
 cd chaperons-backend
 docker-compose up -d
+docker exec -it cartochaperons_api bin/up.sh
 ```
 
 *app*
