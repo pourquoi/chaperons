@@ -19,7 +19,7 @@ RUN apt-get install -y nginx
 RUN rm /etc/nginx/sites-enabled/default
 COPY .docker/nginx/default.conf /etc/nginx/sites-enabled/default
 
-RUN apt-get install -yn mysql-client
+RUN apt-get install -y mysql-client
 
 RUN rm -rf /var/lib/apt/lists/*
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -46,7 +46,6 @@ RUN chmod 777 /var/run/php-fpm.sock
 #RUN pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 #RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 RUN docker-php-ext-install gmp bcmath pdo pdo_mysql opcache
-
 
 # COMPOSER
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
