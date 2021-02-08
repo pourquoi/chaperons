@@ -140,6 +140,7 @@ class FamilyController extends BaseController
 
         $filename = tempnam('/tmp', 'ch_export');
         $f = fopen($filename, "w");
+        fputs($f, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
         $distances = [0.5, 1, 3, 5, 10, 20, 30];
 
@@ -154,7 +155,7 @@ class FamilyController extends BaseController
             $header[] = $label;
         }
 
-        fputcsv($f, $header);
+        fputcsv($f, $header, ";");
 
         foreach($map->getFamilies() as $family) {
             /** @var Family $family $row */
@@ -178,14 +179,14 @@ class FamilyController extends BaseController
                 $row[] = $total .  ' crèche' . ($total ? 's' : '') . "\n" . implode("\n", $nurseries);
             }
 
-            fputcsv($f, $row);
+            fputcsv($f, $row, ";");
         }
 
         fclose($f);
 
         $response = new Response(file_get_contents($filename), 200, [
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="export-familles-' . $map->getId() . '.csv"'
+            'Content-Disposition' => 'attachment; filename="stats-familles-' . $map->getId() . '.csv"'
         ]);
 
         return $response;
@@ -208,10 +209,11 @@ class FamilyController extends BaseController
 
         $filename = tempnam('/tmp', 'ch_export');
         $f = fopen($filename, "w");
+        fputs($f, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
         $n_sel = 3;
 
-        fputcsv($f, ['id', 'adresse', 'ville', 'code postal', 'creche_1', 'creche_1_id', 'distance_1', 'creche_2', 'creche_2_id', 'distance_2', 'creche_3', 'creche_3_id', 'distance_3']);
+        fputcsv($f, ['id', 'adresse', 'ville', 'code postal', 'creche_1', 'creche_1_id', 'distance_1', 'creche_2', 'creche_2_id', 'distance_2', 'creche_3', 'creche_3_id', 'distance_3'], ";");
 
         /** @var Family $family */
         foreach($map->getFamilies() as $family) {
@@ -244,7 +246,7 @@ class FamilyController extends BaseController
                 isset($creche[2]) ? $creche[2] : '-',
                 isset($creche_id[2]) ? $creche_id[2] : '-',
                 isset($distance[2]) ? $distance[2] : '-',
-            ]);
+            ], ";");
         }
 
         fclose($f);
