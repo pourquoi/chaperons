@@ -27,6 +27,15 @@ et éditer API_HOST dans src/environments/environment.ts (mettre l'adresse IP ou
 docker-compose up -d
 ```
 
+## update app or backend
+
+dans chaperons-app ou chaperons-backend
+```
+git pull
+docker-compose build --force-rm --no-cache
+docker-compose up -d
+```
+
 ## alimentation des creches
 
 mettre un fichier creches.csv dans ```chaperons-backend/.docker/import/creches.csv```
