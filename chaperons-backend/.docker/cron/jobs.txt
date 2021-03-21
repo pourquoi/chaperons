@@ -1,2 +1,2 @@
 # daily import 
-0 1 * * * php /app/bin/console app:import-nurseries /app/var/import/creches.csv
+0 1 * * * php /app/bin/console app:import-nurseries --strict /app/var/import/creches.csv
