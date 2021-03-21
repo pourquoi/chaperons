@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class NurseryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findNotInIds($ids) {
+        return $this->createQueryBuilder('n')
+            ->where('n.source_id not in (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()->getResult();
+    }
 }

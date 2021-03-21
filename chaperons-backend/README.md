@@ -13,6 +13,12 @@ Mettre à jour les crèches manuellement:
 docker exec -it cartochaperons_api bin/console app:import-nurseries /path/to/file.csv
 ```
 
+Import avec supression des crèches qui ne sont pas dans le csv:
+
+```shell
+docker exec -it cartochaperons_api bin/console app:import-nurseries --strict /path/to/file.csv
+```
+
 Ajouter un utilisateur:
 
 ```shell
@@ -21,6 +27,3 @@ docker exec -it cartochaperons_api bin/console app:create-user roger
 
 * [rest bundle] (http://symfony.com/doc/master/bundles/FOSRestBundle/index.html)
 * [phantomjs] (http://phantomjs.org/)
-
-
-le SSO peut s'implementer au niveau du login dans UserController::postUserLoginAction

@@ -31,7 +31,7 @@ class NurserySelection
     /**
      * @var Nursery
      *
-     * @ORM\ManyToOne(targetEntity="Nursery")
+     * @ORM\ManyToOne(targetEntity="Nursery", inversedBy="selections")
      */
     private $nursery;
 

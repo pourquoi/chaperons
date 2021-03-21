@@ -20,9 +20,12 @@ class NurseryParser
     /**
      * Parse and save the nurseries.
      *
-     * @param $path
+     * @param string $path
+     * @param bool $strict
+     *
+     * @return int
      */
-    public function importCsv($path)
+    public function importCsv($path, $strict=false)
     {
         $delimiter = $this->detectDelimiter($path, 10);
         $csv = new \SplFileObject($path);
@@ -70,6 +73,8 @@ class NurseryParser
 
         $header = array_flip($header);
 
+        $ids = [];
+
         $n = 0;
 
         while(!$csv->eof()) {
@@ -87,6 +92,8 @@ class NurseryParser
             $type = strtoupper(trim($row[$header['type']]));
 
             $id = trim($row[$header['creche_id_nature']]);
+            $ids[] = $id;
+
             $nursery = $this->em->getRepository('AppBundle:Nursery')->findOneBy(['source_id'=>$id]);
 
             if(!$nursery) {
@@ -112,6 +119,17 @@ class NurseryParser
             $this->em->persist($nursery);
             $n++;
         }
+
+        $this->em->flush();
+
+        if ($strict) {
+            $to_remove = $this->em->getRepository('AppBundle:Nursery')->findNotInIds($ids);
+            foreach($to_remove as $nursery) {
+                $this->em->remove($nursery);
+            }
+        }
+
+        $this->em->flush();
 
         return $n;
     }

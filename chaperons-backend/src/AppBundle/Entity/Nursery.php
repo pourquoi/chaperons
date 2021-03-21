@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +57,18 @@ class Nursery
      * @ORM\ManyToOne(targetEntity="Address", cascade={"persist", "remove"})
      */
     private $address;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="NurserySelection", mappedBy="nursery", cascade={"remove"})
+     */
+    private $selections;
+
+    public function __construct()
+    {
+        $this->selections = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -177,12 +191,39 @@ class Nursery
     }
 
     /**
-     * Get sourceId
-     *
      * @return string
      */
     public function getSourceId()
     {
         return $this->source_id;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getSelections()
+    {
+        return $this->selections;
+    }
+
+    /**
+     * @param NurserySelection $selection
+     */
+    public function addSelection(NurserySelection $selection)
+    {
+        if (!$this->selections->contains($selection)) {
+            $selection->setNursery($this);
+            $this->selections->add($selection);
+        }
+    }
+
+    /**
+     * @param NurserySelection $selection
+     */
+    public function removeSelection(NurserySelection $selection) {
+        if ($this->selections->contains($selection)) {
+            $this->selections->remove($selection);
+            $selection->setNursery(null);
+        }
     }
 }

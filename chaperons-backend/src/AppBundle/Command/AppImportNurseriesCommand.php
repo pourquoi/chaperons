@@ -18,18 +18,20 @@ class AppImportNurseriesCommand extends ContainerAwareCommand
             ->setName('app:import-nurseries')
             ->setDescription('Import nurseries from csv')
             ->addArgument('path', InputArgument::REQUIRED, 'path to the csv')
+            ->addOption('strict', null, InputOption::VALUE_NONE, 'will remove database nurseries not in the csv.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $input->getArgument('path');
+        $strict = $input->getOption('strict');
 
         /** @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $parser = new NurseryParser($em);
-        $n = $parser->importCsv($path);
+        $n = $parser->importCsv($path, $strict);
         $em->flush();
 
 

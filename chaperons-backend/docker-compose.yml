@@ -3,6 +3,7 @@ version: "3.5"
 services:
 
   maria:
+    restart: always
     image: mariadb:latest
     container_name: ${PROJECT}_maria
     command: mysqld --innodb-flush-method=O_DSYNC --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
@@ -28,6 +29,7 @@ services:
       - 3308:3306
 
   api:
+    restart: always
     container_name: ${PROJECT}_api
     build:
       context: .
