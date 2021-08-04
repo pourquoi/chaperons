@@ -7,6 +7,7 @@ export class Map {
     show_mac = true;
     show_micro = true;
     show_dsp = true;
+    show_dspc = true;
     show_partners = true;
     families: Array<Family> = [];
     fill_color_family: string;

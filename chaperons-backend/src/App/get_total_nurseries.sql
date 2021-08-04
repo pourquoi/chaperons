@@ -59,9 +59,11 @@ begin
             * SIN(RADIANS(a.latitude))))) < radius
           and (
             (show_dsp = 1 or n.nature != 'DSP')
+            and (show_dspc = 1 or n.nature != 'DSPC')
             and (show_partners = 1 or n.nature != 'PARTNER')
             and (show_mac = 1 or (n.nature != 'CEP' or n.type != 'MAC'))
             and (show_micro = 1 or (n.nature != 'CEP' or n.type != 'MICRO'))
+            and (show_other = 1 or (n.nature NOT IN ('DSP', 'DSPC', 'PARTNER') or (n.nature = 'CEP' AND n.type NOT IN ('MAC', 'MICRO'))))
           );
 
         return total;

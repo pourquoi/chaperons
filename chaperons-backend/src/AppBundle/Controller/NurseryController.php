@@ -44,6 +44,7 @@ class NurseryController extends BaseController
             if(!$map) throw new NotFoundHttpException();
 
             if(!$map->getShowDSP()) $qb->andWhere("n.nature != 'DSP'");
+            if(!$map->getShowDSPC()) $qb->andWhere("n.nature != 'DSPC'");
             if(!$map->getShowPartners()) $qb->andWhere("n.nature != 'PARTNER'");
             if(!$map->getShowMac()) $qb->andWhere("n.nature != 'CEP' or n.type != 'MAC'");
             if(!$map->getShowMicro()) $qb->andWhere("n.nature != 'CEP' or n.type != 'MICRO'");

@@ -50,7 +50,19 @@ class Family
      * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
+    private $total_250m;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
     private $total_500m;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $total_750m;
 
     /**
      * @var int
@@ -89,8 +101,12 @@ class Family
     private $total_30km;
 
     public function getClosestTotal($distance) {
-        if ($distance < 1) {
+        if ($distance < 0.5) {
+            return $this->total_250m;
+        } else if ($distance < 0.75) {
             return $this->total_500m;
+        } else if ($distance < 1) {
+            return $this->total_750m;
         } else if ($distance < 3) {
             return $this->total_1km;
         } else if ($distance < 5) {
@@ -391,5 +407,36 @@ class Family
         $this->total_30km = $total_30km;
     }
 
+    /**
+     * @return int
+     */
+    public function getTotal250m()
+    {
+        return $this->total_250m;
+    }
+
+    /**
+     * @param int $total_250m
+     */
+    public function setTotal250m($total_250m)
+    {
+        $this->total_250m = $total_250m;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal750m()
+    {
+        return $this->total_750m;
+    }
+
+    /**
+     * @param int $total_750m
+     */
+    public function setTotal750m($total_750m)
+    {
+        $this->total_750m = $total_750m;
+    }
 
 }

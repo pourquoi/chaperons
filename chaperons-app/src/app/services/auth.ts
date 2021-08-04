@@ -3,12 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import '../rxjs.operators.ts'
 
-import {
-  CanActivate, CanLoad, Router, Route,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from '@angular/router';
-
 import { ApiService } from './api';
 
 import { User } from '../models/user';
@@ -27,7 +21,7 @@ export class AuthService {
     }
   }
 
-  get auth_token() {
+  get auth_token(): any {
     return this._auth_token;
   }
 

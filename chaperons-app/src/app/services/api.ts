@@ -61,8 +61,7 @@ export class ApiService {
     }
 
     const headers = {
-      'Content-Type': 'application/json',
-      'X-TEST': this.apiKey
+      'Content-Type': 'application/json'
     };
 
     if ( this.apiKey ) {

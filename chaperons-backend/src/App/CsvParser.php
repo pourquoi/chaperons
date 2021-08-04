@@ -43,4 +43,21 @@ trait CsvParser
 
         return $delimiter;
     }
+
+    /**
+     * automatic convertion windows-1250 and iso-8859-2 info utf-8 string
+     */
+    private function autoUTF(string $s): string
+    {
+        // detect UTF-8
+        if (preg_match('#[\x80-\x{1FF}\x{2000}-\x{3FFF}]#u', $s))
+            return $s;
+
+        // detect WINDOWS-1250
+        if (preg_match('#[\x7F-\x9F\xBC]#', $s))
+            return iconv('WINDOWS-1250', 'UTF-8', $s);
+
+        // assume ISO-8859-2
+        return iconv('ISO-8859-2', 'UTF-8', $s);
+    }
 }

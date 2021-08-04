@@ -1,7 +1,7 @@
 FROM php:7.3.9-fpm-stretch
 
 # NODEJS
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+# RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -57,8 +57,13 @@ WORKDIR /app
 
 COPY app/config/parameters.yml.dist app/config/parameters.yml
 
-RUN mkdir -p /app/var/{log,cache}/{dev,prod,test}
-RUN chmod -R 777 /app/var/{log,cache}/{dev,prod,test}
+RUN mkdir -p /app/var/logs
+RUN mkdir -p /app/var/cache
+RUN mkdir -p /app/var/sessions/dev
+RUN mkdir -p /app/var/sessions/prod
+
+RUN setfacl -dRm u:www-data:rwX /app/var/logs /app/var/cache /app/var/sessions
+RUN setfacl -Rm u:www-data:rwX /app/var/logs /app/var/cache /app/var/sessions
 
 RUN composer install
 

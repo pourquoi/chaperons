@@ -78,7 +78,7 @@ class NurseryParser
         $n = 0;
 
         while(!$csv->eof()) {
-            $row = $csv->fgetcsv($delimiter);
+            $row = str_getcsv($this->autoUTF($csv->fgets()), $delimiter);
             if(sizeof($row)<10) continue;
 
             $name = trim($row[$header['nom']]);
@@ -90,6 +90,10 @@ class NurseryParser
 
             $nature = strtoupper(trim($row[$header['nature']]));
             $type = strtoupper(trim($row[$header['type']]));
+
+            $commercial = isset($header['commercialisable'])
+                && !empty($row[$header['commercialisable']])
+                && !in_array(strtoupper($row[$header['commercialisable']]), ['NO', 'NON']);
 
             $id = trim($row[$header['creche_id_nature']]);
             $ids[] = $id;
@@ -116,6 +120,10 @@ class NurseryParser
             $address->setLongitude($lng);
             $address->setGeocodeStatus(1);
 
+            if ($nursery->getNature() === 'DSP' && $commercial) {
+                $nursery->setNature('DSPC');
+            }
+
             $this->em->persist($nursery);
             $n++;
         }
@@ -138,14 +146,15 @@ class NurseryParser
     private function normalizeType($type) {
         if($type == 'MIC') return 'MICRO';
         if(preg_match('/MICRO.*/i', $type)) return 'MICRO';
-        return $type;
+        if(preg_match('/MAC.*/i', $type)) return 'MAC';
+        return null;
     }
 
     private function normalizeNature($nature) {
         if(preg_match('/DSP.*/i', $nature)) return 'DSP';
         if(preg_match('/CEP.*/i', $nature)) return 'CEP';
         if(preg_match('/PART.*/i', $nature)) return 'PARTNER';
-        return $nature;
+        return null;
     }
 
 }

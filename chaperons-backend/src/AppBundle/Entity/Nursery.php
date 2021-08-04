@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Nursery
@@ -40,14 +41,14 @@ class Nursery
     /**
      * @var string
      *
-     * @ORM\Column()
+     * @ORM\Column(nullable=true)
      */
     private $nature;
 
     /**
      * @var string
      *
-     * @ORM\Column()
+     * @ORM\Column(nullable=true)
      */
     private $type;
 
@@ -62,6 +63,7 @@ class Nursery
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="NurserySelection", mappedBy="nursery", cascade={"remove"})
+     * @Serializer\Exclude()
      */
     private $selections;
 

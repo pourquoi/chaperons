@@ -142,27 +142,30 @@ class FamilyController extends BaseController
         $f = fopen($filename, "w");
         fputs($f, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
-        $distances = [0.5, 1, 3, 5, 10, 20, 30];
+        $distances = [0.25, 0.75, 1, 3, 5, 10, 20, 30];
 
-        $header = ['Addresses'];
+        $header = ['Addresse', 'Ville', 'Code Postal', 'Id famille'];
         foreach ($distances as $dist) {
-            $label = 'Nombre total de crèches dans un rayon < ';
+            $dist_label = '';
             if ($dist < 1.) {
-                $label .= ($dist * 1000) . 'm';
+                $dist_label .= ($dist * 1000) . 'm';
             } else {
-                $label .= $dist . 'km';
+                $dist_label .= $dist . 'km';
             }
-            $header[] = $label;
+            $header[] = "Nombre total de crèches dans un rayon < $dist_label";
+            $header[] = "Crèches dans un rayon < $dist_label";
         }
 
         fputcsv($f, $header, ";");
 
         foreach($map->getFamilies() as $family) {
             /** @var Family $family $row */
-            $row = [];
-            $row[] = implode(' ', [$family->getAddress()->getStreet(),
+            $row = [
+                $family->getAddress()->getStreet(),
                 $family->getAddress()->getCity(),
-                $family->getAddress()->getZip(), '(' . $family->getId() . ')']);
+                $family->getAddress()->getZip(),
+                $family->getId()
+            ];
 
             foreach ($distances as $dist) {
                 $sel = $family->getClosestNurserySelection(30);
@@ -176,7 +179,8 @@ class FamilyController extends BaseController
 
                 $total = $family->getClosestTotal($dist);
 
-                $row[] = $total .  ' crèche' . ($total ? 's' : '') . "\n" . implode("\n", $nurseries);
+                $row[] = $total;
+                $row[] = implode("\n", $nurseries);
             }
 
             fputcsv($f, $row, ";");

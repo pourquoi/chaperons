@@ -69,6 +69,22 @@ class Map
     private $showDSP = true;
 
     /**
+     * @SerializedName("show_dspc")
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $showDSPC = true;
+
+    /**
+     * @SerializedName("show_other")
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $showOther = true;
+
+    /**
      * @var float
      *
      * @ORM\Column(type="float", nullable=true)
@@ -822,6 +838,38 @@ class Map
     public function setFillColorNurseryOwned($fillColorNurseryOwned)
     {
         $this->fillColorNurseryOwned = $fillColorNurseryOwned;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getShowDSPC()
+    {
+        return $this->showDSPC;
+    }
+
+    /**
+     * @param bool $showDSPC
+     */
+    public function setShowDSPC($showDSPC)
+    {
+        $this->showDSPC = $showDSPC;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getShowOther()
+    {
+        return $this->showOther;
+    }
+
+    /**
+     * @param bool $showOther
+     */
+    public function setShowOther($showOther)
+    {
+        $this->showOther = $showOther;
     }
 
 

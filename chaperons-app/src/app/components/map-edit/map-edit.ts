@@ -45,11 +45,18 @@ export class MapEditComponent implements OnInit {
 
   edition_step = 'form';
 
-  stats = {};
+  stats = {
+      micro: 0,
+      mac: 0,
+      dsp: 0,
+      dspc: 0,
+      partner: 0,
+      other: 0
+  };
 
   _show_name_input = false;
 
-  get show_name_input() { return this._show_name_input; }
+  get show_name_input(): boolean { return this._show_name_input; }
   set show_name_input(show) {
     this._show_name_input = show;
     if (show) {
@@ -57,14 +64,13 @@ export class MapEditComponent implements OnInit {
     }
   }
 
-  get n_geocoding_required() {
+  get n_geocoding_required(): number {
     return _.reduce(this.map.families, (sum, o) => sum + ((o.address.geocode_status !== 1) ? 1 : 0), 0);
   }
 
-  get n_address_geocoded() {
+  get n_address_geocoded(): number {
     return _.reduce(this.map.families, (sum, o) => sum + ((o.address.geocode_status === 1) ? 1 : 0), 0);
   }
-
 
   constructor(
       private route: ActivatedRoute,
@@ -87,7 +93,7 @@ export class MapEditComponent implements OnInit {
     );
 
     this.uploader = new FileUploader({
-      'headers': [{name: 'X-AUTH-TOKEN', value: this.user.api_key}]
+      headers: [{name: 'X-AUTH-TOKEN', value: this.user.api_key}]
     });
     // use lambda callbacks to keep 'this'
     this.uploader.onAfterAddingFile = (fileItem) => {
@@ -98,10 +104,10 @@ export class MapEditComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.apiService.getResource('/nurseries/stats').subscribe(
       (stats) => {
-        this.stats['micro'] = _.reduce(
+        this.stats.micro = _.reduce(
             stats,
             (sum, o) => {
                 if (o['type'] === 'MICRO' && o['nature'] === 'CEP') {
@@ -112,18 +118,21 @@ export class MapEditComponent implements OnInit {
             },
             0
         );
-        this.stats['mac'] = _.reduce(
+        
+        this.stats.mac = _.reduce(
             stats,
             (sum, o) => {
                 if (o['type'] === 'MAC' && o['nature'] === 'CEP') {
-                    return sum + o['c'];
+                    return sum + +o['c'];
                 } else {
                     return sum;
                 }
             },
             0
         );
-        this.stats['dsp'] = _.reduce(stats, 
+
+        this.stats.dsp = _.reduce(
+            stats,
             (sum, o) => {
                 if (o['nature'] === 'DSP') {
                     return sum + +o['c'];
@@ -133,7 +142,33 @@ export class MapEditComponent implements OnInit {
             },
             0
         );
-        this.stats['partner'] = _.reduce(
+
+        this.stats.dspc = _.reduce(
+            stats,
+            (sum, o) => {
+                if (o['nature'] === 'DSPC') {
+                    return sum + +o['c'];
+                } else {
+                    return sum;
+                }
+            },
+            0
+        );
+
+        this.stats.other = _.reduce(
+            stats,
+            (sum, o) => {
+                if (o['nature'].indexOf(['DSP', 'DSPC', 'PARTNER']) === -1
+                || (o['nature'] === 'CEP' && o['type'] !== 'MAC' && o['type'] !== 'MICRO')) {
+                    return sum + +o['c'];
+                } else {
+                    return sum;
+                }
+            },
+            0
+        );
+
+        this.stats.partner = _.reduce(
             stats,
             (sum, o) => {
                 if (o['nature'] === 'PARTNER') {
@@ -179,7 +214,7 @@ export class MapEditComponent implements OnInit {
     const data = {
       map: _.pick(
           this.map,
-          ['name', 'show_micro', 'show_mac', 'show_dsp', 'show_partners', 'nurseries_by_family', 'nurseries_max_distance']
+          ['name', 'show_micro', 'show_mac', 'show_dsp', 'show_other', 'show_dspc', 'show_partners', 'nurseries_by_family', 'nurseries_max_distance']
         )
     };
     let url: string;

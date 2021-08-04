@@ -1,6 +1,6 @@
 import { Map } from '../models/map';
-
-import * as _ from "lodash";
+import { NurserySelection } from '../models/nursery-selection';
+import * as _ from 'lodash';
 
 export class MapStats {
     constructor(private map: Map) {
@@ -22,20 +22,15 @@ export class MapStats {
             }
         });
 
-        const hist = [];
-
-        let i = 0;
-
-        while ( i < distances.length ) {
-            hist[i] = {
-                distance: distances[i],
+        const hist = distances.map((d, i) =>
+            ({
+                distance: d,
                 families: 0,
                 families_owned: 0,
                 families_partner: 0,
                 distance_label: labels[i]
-            };
-            i++;
-        }
+            })
+        );
 
         if (keys.includes('families')) {
             this._fillHist(hist, ratio, cumulative, 'families');
@@ -43,11 +38,11 @@ export class MapStats {
 
         if (keys.includes('families_owned')) {
             this._fillHist(hist, ratio, cumulative, 'families_owned',
-                (sel) => sel.nursery.nature !== 'PARTNER');
+                (sel: NurserySelection) => sel.nursery.nature !== 'PARTNER');
         }
         if (keys.includes('families_partner')) {
             this._fillHist(hist, ratio, cumulative, 'families_partner',
-                (sel) => sel.nursery.nature === 'PARTNER');
+                (sel: NurserySelection) => sel.nursery.nature === 'PARTNER');
         }
 
         return hist;

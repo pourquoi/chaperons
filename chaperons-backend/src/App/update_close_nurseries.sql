@@ -15,8 +15,10 @@ begin
   declare distance_unit float;
   declare map_id int;
   declare show_dsp int;
+  declare show_dspc int;
   declare show_mac int;
   declare show_micro int;
+  declare show_other int;
   declare show_partners int;
   declare radius int;
   declare max_results int;
@@ -35,8 +37,8 @@ begin
   else
 
   -- get map options
-  select m.show_dsp, m.show_mac, m.show_micro, m.show_partners, m.nurseries_by_family, m.nurseries_max_distance
-  into show_dsp, show_mac, show_micro, show_partners, max_results, radius
+  select m.show_dsp, m.show_dspc, m.show_other, m.show_mac, m.show_micro, m.show_partners, m.nurseries_by_family, m.nurseries_max_distance
+  into show_dsp, show_dspc, show_other, show_mac, show_micro, show_partners, max_results, radius
   from map m where m.id=map_id;
 
   -- compute the search bounds
@@ -68,15 +70,23 @@ begin
                                    * SIN(RADIANS(a.latitude))))) <= radius
         and (
           (show_dsp = 1 or n.nature != 'DSP')
+          and (show_dspc = 1 or n.nature != 'DSPC')
           and (show_partners = 1 or n.nature != 'PARTNER')
           and (show_mac = 1 or (n.nature != 'CEP' or n.type != 'MAC'))
           and (show_micro = 1 or (n.nature != 'CEP' or n.type != 'MICRO'))
+          and (show_other = 1 or (n.nature NOT IN ('DSP', 'DSPC', 'PARTNER') or (n.nature = 'CEP' AND n.type NOT IN ('MAC', 'MICRO'))))
         )
   order by ndistance
   limit max_results;
 
+  set total = get_total_nurseries(family_id, 250);
+  update family set total_250m = total where id = family_id;
+
   set total = get_total_nurseries(family_id, 500);
   update family set total_500m = total where id = family_id;
+
+  set total = get_total_nurseries(family_id, 750);
+  update family set total_750m = total where id = family_id;
 
   set total = get_total_nurseries(family_id, 1000);
   update family set total_1km = total where id = family_id;

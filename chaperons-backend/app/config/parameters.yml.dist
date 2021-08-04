@@ -2,7 +2,7 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     172.29.0.100
+    database_host:     maria
     database_port:     ~
     database_name:     cartochaperons
     database_user:     cartochaperons

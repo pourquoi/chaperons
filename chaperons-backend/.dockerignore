@@ -3,5 +3,7 @@
 .vscode
 web/maps
 vendor/**
-cache/**
-log/**
+var/sessions/**
+var/logs/**
+var/cache/**
+var/sessions/**

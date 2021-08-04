@@ -35,12 +35,25 @@
     </div>
 
     <div class="form-check">
+        <label class="form-check-label">
+          <input [(ngModel)]="map.show_dspc" class="form-check-input" type="checkbox" name="show_dspc">
+          DSP + C ({{ stats['dspc'] }})
+        </label>
+      </div>
+
+    <div class="form-check">
       <label class="form-check-label">
         <input [(ngModel)]="map.show_partners" class="form-check-input" type="checkbox" name="show_partners">
         Crèches partenaires ({{ stats['partner'] }})
       </label>
     </div>
   
+    <div class="form-check">
+      <label class="form-check-label">
+        <input [(ngModel)]="map.show_other" class="form-check-input" type="checkbox" name="show_other">
+        Autres ({{ stats['other'] }})
+      </label>
+    </div>
 
   <h2><i class="fa fa-home" aria-hidden="true"></i> Adresses des familles</h2>
 
