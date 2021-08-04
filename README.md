@@ -33,6 +33,7 @@ dans chaperons-app ou chaperons-backend
 ```
 git pull
 docker-compose build --force-rm --no-cache
+docker-compose down
 docker-compose up -d
 ```
 
