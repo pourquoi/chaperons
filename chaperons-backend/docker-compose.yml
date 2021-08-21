@@ -41,8 +41,8 @@ services:
         ipv4_address: 172.29.0.20
     depends_on:
       - maria
-    ports:
-      - 8899:8000
+#   ports:
+#     - 8899:8000
 
 volumes:
   mysql_data:

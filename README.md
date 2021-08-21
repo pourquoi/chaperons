@@ -19,6 +19,7 @@ et noter le login/mdp pour le transmettre aux utilisateurs
 ```shell
 cd chaperons-app
 cp src/environments/environment.ts.dist src/environments/environment.ts
+vim src/environments/environment.ts
 ```
 
 et éditer API_HOST dans src/environments/environment.ts (mettre l'adresse IP ou DNS)

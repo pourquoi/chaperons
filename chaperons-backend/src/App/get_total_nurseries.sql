@@ -16,6 +16,7 @@ begin
     declare distance_unit float;
     declare map_id int;
     declare show_dsp int;
+    declare show_dspc int;
     declare show_mac int;
     declare show_micro int;
     declare show_partners int;
@@ -35,7 +36,7 @@ begin
 
         -- get map options
         select m.show_dsp, m.show_mac, m.show_micro, m.show_partners, m.nurseries_by_family, m.nurseries_max_distance
-        into show_dsp, show_mac, show_micro, show_partners, max_results, max_radius
+        into show_dsp, show_dspc, show_mac, show_micro, show_partners, max_results, max_radius
         from map m where m.id=map_id;
 
         set distance_unit = 111045.0;
