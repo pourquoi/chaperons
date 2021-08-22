@@ -217,7 +217,7 @@ class FamilyController extends BaseController
 
         $n_sel = 3;
 
-        fputcsv($f, ['id', 'adresse', 'ville', 'code postal', 'creche_1', 'creche_1_id', 'distance_1', 'creche_2', 'creche_2_id', 'distance_2', 'creche_3', 'creche_3_id', 'distance_3'], ";");
+        fputcsv($f, ['id', 'adresse', 'ville', 'code postal', 'creche_1', 'creche_1_id', 'distance_1 (km)', 'creche_2', 'creche_2_id', 'distance_2 (km)', 'creche_3', 'creche_3_id', 'distance_3 (km)'], ";");
 
         /** @var Family $family */
         foreach($map->getFamilies() as $family) {
@@ -229,7 +229,7 @@ class FamilyController extends BaseController
             if( count($sel) ) {
 
                 foreach($sel as $s) {
-                    $distance[] = $s->getFormattedDistance();
+                    $distance[] = number_format($s->getDistance()/1000., 1, '.', ' ');
                     $creche[] = $s->getNursery()->getName();
                     $creche_id[] = $s->getNursery()->getSourceId();
                 }
