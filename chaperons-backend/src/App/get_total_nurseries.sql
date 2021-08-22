@@ -59,7 +59,7 @@ begin
             * COS(RADIANS(family_lng - a.longitude))
             + SIN(RADIANS(family_lat))
             * SIN(RADIANS(a.latitude))))) < radius
-          and and (
+          and (
             (show_dsp = 1 or n.nature != 'DSP' or n.nature is null)
             and (show_dspc = 1 or n.nature != 'DSPC' or n.nature is null)
             and (show_partners = 1 or n.nature != 'PARTNER' or n.nature is null)
