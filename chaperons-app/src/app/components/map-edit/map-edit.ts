@@ -162,7 +162,7 @@ export class MapEditComponent implements OnInit {
                 const type = o['type'] || null;
                 if (
                     ['DSP', 'DSPC', 'PARTNER'].indexOf(nature) === -1
-                || (nature === 'CEP' && type !== 'MAC' && type !== 'MICRO')) {
+                && (nature === 'CEP' && type !== 'MAC' && type !== 'MICRO')) {
                     return sum + +o['c'];
                 } else {
                     return sum;
