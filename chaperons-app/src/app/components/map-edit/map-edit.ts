@@ -158,8 +158,11 @@ export class MapEditComponent implements OnInit {
         this.stats.other = _.reduce(
             stats,
             (sum, o) => {
-                if (o['nature'].indexOf(['DSP', 'DSPC', 'PARTNER']) === -1
-                || (o['nature'] === 'CEP' && o['type'] !== 'MAC' && o['type'] !== 'MICRO')) {
+                const nature = o['nature'] || null;
+                const type = o['type'] || null;
+                if (
+                    ['DSP', 'DSPC', 'PARTNER'].indexOf(nature) === -1
+                || (nature === 'CEP' && type !== 'MAC' && type !== 'MICRO')) {
                     return sum + +o['c'];
                 } else {
                     return sum;
