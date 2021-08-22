@@ -48,9 +48,9 @@ class NurseryController extends BaseController
             if(!$map->getShowPartners()) $qb->andWhere("n.nature != 'PARTNER'");
             if(!$map->getShowMac()) $qb->andWhere("n.nature != 'CEP' or (n.nature = 'CEP' and n.type != 'MAC')");
             if(!$map->getShowMicro()) $qb->andWhere("n.nature != 'CEP' or (n.nature = 'CEP' and n.type != 'MICRO')");
-            if(!$map->getShowOther()) $qb->andWhere("nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (nature!='CEP' or type in ('MAC', 'MICRO'))");
+            if(!$map->getShowOther()) $qb->andWhere("n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature!='CEP' or n.type in ('MAC', 'MICRO'))");
         } else {
-            
+
         }
 
         // @todo cache
