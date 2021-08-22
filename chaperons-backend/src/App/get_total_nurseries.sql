@@ -59,13 +59,13 @@ begin
             * COS(RADIANS(family_lng - a.longitude))
             + SIN(RADIANS(family_lat))
             * SIN(RADIANS(a.latitude))))) < radius
-          and (
-            (show_dsp = 1 or n.nature != 'DSP')
-            and (show_dspc = 1 or n.nature != 'DSPC')
-            and (show_partners = 1 or n.nature != 'PARTNER')
-            and (show_mac = 1 or (n.nature != 'CEP' or n.type != 'MAC'))
-            and (show_micro = 1 or (n.nature != 'CEP' or n.type != 'MICRO'))
-            and (show_other = 1 or (n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature!='CEP' or n.type in ('MAC', 'MICRO'))))
+          and and (
+            (show_dsp = 1 or n.nature != 'DSP' or n.nature is null)
+            and (show_dspc = 1 or n.nature != 'DSPC' or n.nature is null)
+            and (show_partners = 1 or n.nature != 'PARTNER' or n.nature is null)
+            and (show_mac = 1 or (n.nature != 'CEP' or n.type != 'MAC') or n.nature is null)
+            and (show_micro = 1 or (n.nature != 'CEP' or n.type != 'MICRO') or n.nature is null)
+            and (show_other = 1 or (n.nature is not null and n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature != 'CEP' or n.type in ('MAC', 'MICRO'))))
           );
 
         return total;

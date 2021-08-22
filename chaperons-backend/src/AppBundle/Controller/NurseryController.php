@@ -43,12 +43,12 @@ class NurseryController extends BaseController
             $map = $em->getRepository('AppBundle:Map')->find($map_id);
             if(!$map) throw new NotFoundHttpException();
 
-            if(!$map->getShowDSP()) $qb->andWhere("n.nature != 'DSP'");
-            if(!$map->getShowDSPC()) $qb->andWhere("n.nature != 'DSPC'");
-            if(!$map->getShowPartners()) $qb->andWhere("n.nature != 'PARTNER'");
-            if(!$map->getShowMac()) $qb->andWhere("n.nature != 'CEP' or (n.nature = 'CEP' and n.type != 'MAC')");
-            if(!$map->getShowMicro()) $qb->andWhere("n.nature != 'CEP' or (n.nature = 'CEP' and n.type != 'MICRO')");
-            if(!$map->getShowOther()) $qb->andWhere("n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature!='CEP' or n.type in ('MAC', 'MICRO'))");
+            if(!$map->getShowDSP()) $qb->andWhere("n.nature is null or n.nature != 'DSP'");
+            if(!$map->getShowDSPC()) $qb->andWhere("n.nature is null or n.nature != 'DSPC'");
+            if(!$map->getShowPartners()) $qb->andWhere("n.nature is null or n.nature != 'PARTNER'");
+            if(!$map->getShowMac()) $qb->andWhere("n.nature is null or n.nature != 'CEP' or (n.nature = 'CEP' and n.type != 'MAC')");
+            if(!$map->getShowMicro()) $qb->andWhere("n.nature is null or n.nature != 'CEP' or (n.nature = 'CEP' and n.type != 'MICRO')");
+            if(!$map->getShowOther()) $qb->andWhere("n.nature is not null and n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature != 'CEP' or n.type in ('MAC', 'MICRO'))");
         } else {
 
         }
