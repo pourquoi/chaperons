@@ -65,7 +65,7 @@ begin
             and (show_partners = 1 or n.nature != 'PARTNER')
             and (show_mac = 1 or (n.nature != 'CEP' or n.type != 'MAC'))
             and (show_micro = 1 or (n.nature != 'CEP' or n.type != 'MICRO'))
-            and (show_other = 1 or (n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature!='CEP' or n.type in ('MAC', 'MICRO')))
+            and (show_other = 1 or (n.nature in ('PARTNER', 'DSP', 'DSPC', 'CEP') and (n.nature!='CEP' or n.type in ('MAC', 'MICRO'))))
           );
 
         return total;
