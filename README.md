@@ -10,6 +10,7 @@ docker-compose up -d
 docker exec -it cartochaperons_api bin/up.sh
 docker exec -it cartochaperons_api bin/console app:create-user commercial
 docker exec -it cartochaperons_api bin/console app:import-nurseries var/import/creches.csv
+docker exec -it cartochaperons_api bin/up.sh
 ```
 
 et noter le login/mdp pour le transmettre aux utilisateurs
@@ -28,15 +29,29 @@ et éditer API_HOST dans src/environments/environment.ts (mettre l'adresse IP ou
 docker-compose up -d
 ```
 
-## update app or backend
+## update backend
 
-dans chaperons-app ou chaperons-backend
 ```
 git pull
+cd chaperons-backend
 docker-compose build --force-rm --no-cache
 docker-compose down
 docker-compose up -d
+docker exec -it cartochaperons_api bin/up.sh
 ```
+
+## update app
+
+```
+git pull
+cd chaperons-app
+docker-compose build --force-rm --no-cache
+docker-compose down
+docker-compose up -d
+docker exec -it cartochaperons_api bin/up.sh
+```
+
+
 
 ## alimentation des creches
 
